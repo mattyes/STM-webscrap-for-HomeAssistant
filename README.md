@@ -20,8 +20,10 @@ This project is licensed under MIT licence.
 ### Python
 
 - Install the required Python libraries using `pip`:
-```pip install requests beautifulsoup4```
+```pip install requests beautifulsoup4 python-dotenv```
 - Python version `3.12.8`
+    - Check your Python version:
+```python --version```
 
 ### Home Assistant
 Make sure you have a working Home Assistant server hosted

@@ -1,8 +1,12 @@
 import requests
 import os
 from bs4 import BeautifulSoup
-HA_TOKEN = os.getenv("HA_TOKEN")
+from dotenv import load_dotenv
+
+load_dotenv()
+
 HA_URL = os.getenv("HA_URL")
+HA_TOKEN = os.getenv("HA_TOKEN")
 
 # Configuration
 URL = "https://www.stm.info/en/info/service-updates/metro"
