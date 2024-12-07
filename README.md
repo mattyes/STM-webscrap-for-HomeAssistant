@@ -2,7 +2,7 @@
 
 STM Metro Status is a Python project for residents of the Montreal region using [Home Assistant](https://www.home-assistant.io/). This script scrapes the STM website to get the real-time status of Montreal's metro lines and updates Home Assistant sensors with the data.
 
-This project is licensed under [The Unlicense](LICENSE), so feel free to modify and share it as you like.
+This project is licensed under MIT licence.
 
 ---
 
