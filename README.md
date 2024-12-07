@@ -83,5 +83,6 @@ To contribute, fork the repository, make your changes, and submit a pull request
 ## Roadmap
 - Add the ability to host the script locally on Home Assistant as an add-on.
 - Allow dynamic configuration for additional metro services through a YAML file or the Home Assistant UI.
+
 ## Licence
-This project is licensed under [The Unlicense](https://unlicense.org/).
+This project is licensed under the MIT licence.
