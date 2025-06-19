@@ -1,0 +1,20 @@
+name: "STM Metro Status"
+description: "Monitor Montreal STM metro status"
+version: "1.0.5"
+slug: "stm_metro_status"
+init: false
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+startup: services
+boot: auto
+options:
+  update_interval: 300
+  ha_token: ""
+schema:
+  update_interval: int(1,3600)
+  ha_token: str
+homeassistant_api: true

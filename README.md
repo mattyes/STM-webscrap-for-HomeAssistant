@@ -11,80 +11,191 @@ This project is licensed under MIT licence.
 - Fetches real-time metro status from [STM's website](https://www.stm.info/en/info/service-updates/metro).
 - Updates custom Home Assistant sensors with metro status.
 - Can be scheduled to run locally using Task Scheduler, cron jobs, or similar tools.
+- **NEW: Home Assistant Add-on support for easy installation and hosting**
 - Extensible to support additional metro services.
 
 ---
 
-## Requirements
+## Installation Options
 
-### Python
+### Option 1: Home Assistant Add-on (Recommended)
+
+The easiest way to use this project is as a Home Assistant add-on:
+
+#### Prerequisites
+- Home Assistant with Supervisor (Home Assistant OS, Supervised, or Container with add-ons)
+- Network access to STM website
+
+#### Installation Steps
+
+1. **Add Local Add-on Repository**:
+   - Copy the entire project folder to your Home Assistant `/addon_configs/local/` directory
+   - Name the folder `stm-metro-status`
+
+2. **Install the Add-on**:
+   - Go to **Settings** → **Add-ons** → **Add-on Store**
+   - Click the **three dots menu** → **Repositories**
+   - Look for "STM Metro Status" in Local add-ons
+   - Click **Install**
+
+3. **Configure the Add-on**:
+   - **Update Interval**: Set how often to check metro status (default: 300 seconds)
+   - **Ha Token**: Create a Long-Lived Access Token in Home Assistant:
+     - Go to your **Profile** → **Long-Lived Access Tokens** → **Create Token**
+     - Copy the token and paste it in the add-on configuration
+
+4. **Start the Add-on**:
+   - Click **Start** and check the logs for successful operation
+   - The add-on will automatically create these sensors:
+     - `sensor.metro_line_1_status` (Green Line)
+     - `sensor.metro_line_2_status` (Orange Line)
+     - `sensor.metro_line_4_status` (Yellow Line)
+     - `sensor.metro_line_5_status` (Blue Line)
+
+#### Add-on Configuration
+
+```yaml
+update_interval: 300  # Check interval in seconds (1-3600)
+ha_token: ""          # Your Home Assistant Long-Lived Access Token
+```
+
+#### Customizing Sensors (Optional)
+
+Add this to your `configuration.yaml` for nicer names and icons:
+
+```yaml
+homeassistant:
+  customize:
+    sensor.metro_line_1_status:
+      friendly_name: "Metro Line 1 (Green)"
+      icon: mdi:subway
+    sensor.metro_line_2_status:
+      friendly_name: "Metro Line 2 (Orange)"
+      icon: mdi:subway
+    sensor.metro_line_4_status:
+      friendly_name: "Metro Line 4 (Yellow)"
+      icon: mdi:subway
+    sensor.metro_line_5_status:
+      friendly_name: "Metro Line 5 (Blue)"
+      icon: mdi:subway
+```
+
+### Option 2: Manual Installation (Advanced Users)
+
+#### Requirements
+
+##### Python
 
 - Install the required Python libraries using `pip`:
-```pip install requests beautifulsoup4 python-dotenv```
+```bash
+pip install requests beautifulsoup4 python-dotenv
+```
 - Python version `3.12.8`
     - Check your Python version:
-```python --version```
+```bash
+python --version
+```
 
-### Home Assistant
+##### Home Assistant
 Make sure you have a working Home Assistant server hosted
-- If it is running localy use it's `IP address` for the `HA_URL` in the `.env` file.
-- If it's running on a diffrent network or in the cloud use it's `Domain` for the `HA_URL` in the `.env` file.
+- If it is running locally use its `IP address` for the `HA_URL` in the `.env` file.
+- If it's running on a different network or in the cloud use its `Domain` for the `HA_URL` in the `.env` file.
 
-## Installation
-### Step 1:
+#### Installation Steps
+
+##### Step 1:
 Clone the Git Repo:
-```git clone https://github.com/your-username/STM-Metro-Status.git```
+```bash
+git clone https://github.com/mattyes/STM-webscrap-for-HomeAssistant.git
+cd STM-webscrap-for-HomeAssistant
+```
 
-Navigate to the folder:
-```cd STM-Metro-Status```
-
-### Step 2:
+##### Step 2:
 Create a `.env` file in the project root:
 
 ```
 HA_TOKEN=your_long_lived_access_token_here 
 HA_URL=your_home_assistant_url_here
 ```
-### Step 3:
-Create the Home Assistant Helpers:
-You need to create **four helpers** in Home Assistant corresponding to the metro lines. These helpers are sensors that will be updated with the metro status:
-- sensor.metro_line_1_status
-- sensor.metro_line_2_status
-- sensor.metro_line_5_status
-- sensor.metro_line_4_status
 
-For more information on creating sensors in Home Assistant, refer to the official documentation.
+##### Step 3:
+The script will automatically create the sensors when first run. No manual helper creation is needed.
 
-### Step 4:
+##### Step 4:
 Run the `metro_status.py` script to ensure it's working:
-```python metro_status.py```
+```bash
+python src/metro_status.py
+```
 
-### Step 5:
+##### Step 5:
 Setup the script to run every 5 minutes:
 
 - **Windows**: Use Task Scheduler.
-
-- **Linux/Macos**: Use a cron job:
-`*/5 * * * * /path/to/python /path/to/metro_status.py`
+- **Linux/MacOS**: Use a cron job:
+```bash
+*/5 * * * * /path/to/python /path/to/STM-webscrap-for-HomeAssistant/src/metro_status.py
+```
 
 ## Usage
-### Check the Metro Stage Manually
+
+### Check the Metro Status Manually
 Run the script to scrape metro status:
-`python metro_status.py`
+```bash
+python src/metro_status.py
+```
+
 ### Update a Specific Sensor for Testing
 Use `test.py` to manually test updating a Home Assistant sensor:
-`python test.py`
+```bash
+python src/test.py
+```
+
+## Sensors Created
+
+The script automatically creates these sensors in Home Assistant:
+
+- **sensor.metro_line_1_status**: Green Line status
+- **sensor.metro_line_2_status**: Orange Line status
+- **sensor.metro_line_4_status**: Yellow Line status
+- **sensor.metro_line_5_status**: Blue Line status
+
+Each sensor includes:
+- **State**: Current status (e.g., "Normal métro service", "Service interruption")
+- **Attributes**: Line name, friendly name, and subway icon
+- **Updates**: Every 5 minutes (configurable in add-on)
+
+## Troubleshooting
+
+### Add-on Issues
+- **401 Unauthorized**: Check your Long-Lived Access Token
+- **Connection errors**: Verify your Home Assistant URL and network connectivity
+- **Sensors not updating**: Check add-on logs for errors
+
+### Manual Installation Issues
+- **Environment variables**: Ensure `.env` file is in the correct location
+- **Python dependencies**: Verify all packages are installed
+- **Network access**: Ensure the script can reach both STM website and Home Assistant
 
 ## Contributing
 Contributions are welcome! Here's how you can help:
 - Add support for more metro services or transit systems.
-- Help integrate this project as an add-on for Home Assistant to allow easier hosting.
+- Improve the Home Assistant add-on functionality.
+- Add additional configuration options.
 
 To contribute, fork the repository, make your changes, and submit a pull request.
 
 ## Roadmap
-- Add the ability to host the script locally on Home Assistant as an add-on.
+- ✅ Add the ability to host the script locally on Home Assistant as an add-on.
 - Allow dynamic configuration for additional metro services through a YAML file or the Home Assistant UI.
+- Add support for other transit systems (Bus, Train, etc.)
+- Implement webhook notifications for service disruptions
 
-## Licence
+## Credits
+
+### Home Assistant Add-on Development
+The Home Assistant add-on functionality was contributed by [@wildenrou](https://github.com/wildenrou), a beginner developer who used Claude AI assistance throughout the entire development process. This contribution demonstrates how AI can help newcomers make meaningful open-source contributions to their local communities! 🤖🚇
+
+*Special thanks to the Claude AI assistant for guidance on Home Assistant add-on architecture, Docker containerization, and Python integration patterns.*
+
+## License
 This project is licensed under the MIT licence.
