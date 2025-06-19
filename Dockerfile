@@ -27,7 +27,14 @@ RUN echo '#!/usr/bin/with-contenv bashio' > /app/run.sh && \
     echo '  bashio::log.info "Using supervisor token"' >> /app/run.sh && \
     echo 'fi' >> /app/run.sh && \
     echo '' >> /app/run.sh && \
-    echo 'export HA_URL="http://192.168.2.118:8123"' >> /app/run.sh && \
+    echo '# Try supervisor core first, fall back to localhost' >> /app/run.sh && \
+    echo 'if curl -s -f "http://supervisor/core/api/" > /dev/null 2>&1; then' >> /app/run.sh && \
+    echo '  export HA_URL="http://supervisor/core"' >> /app/run.sh && \
+    echo '  bashio::log.info "Using supervisor core URL"' >> /app/run.sh && \
+    echo 'else' >> /app/run.sh && \
+    echo '  export HA_URL="http://homeassistant:8123"' >> /app/run.sh && \
+    echo '  bashio::log.info "Using homeassistant container URL"' >> /app/run.sh && \
+    echo 'fi' >> /app/run.sh && \
     echo '' >> /app/run.sh && \
     echo 'bashio::log.info "Starting STM Metro Status monitor..."' >> /app/run.sh && \
     echo 'bashio::log.info "Update interval: ${UPDATE_INTERVAL} seconds"' >> /app/run.sh && \
