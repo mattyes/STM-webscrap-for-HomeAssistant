@@ -190,5 +190,12 @@ To contribute, fork the repository, make your changes, and submit a pull request
 - Add support for other transit systems (Bus, Train, etc.)
 - Implement webhook notifications for service disruptions
 
+## Credits
+
+### Home Assistant Add-on Development
+The Home Assistant add-on functionality was contributed by [@wildenrou](https://github.com/wildenrou), a beginner developer who used Claude AI assistance throughout the entire development process. This contribution demonstrates how AI can help newcomers make meaningful open-source contributions to their local communities! 🤖🚇
+
+*Special thanks to the Claude AI assistant for guidance on Home Assistant add-on architecture, Docker containerization, and Python integration patterns.*
+
 ## License
 This project is licensed under the MIT licence.
