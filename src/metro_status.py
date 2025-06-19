@@ -1,12 +1,10 @@
 import requests
 import os
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 
-load_dotenv()
-
-HA_URL = os.getenv("HA_URL")
-HA_TOKEN = os.getenv("HA_TOKEN")
+# Get environment variables
+HA_TOKEN = os.getenv('HA_TOKEN')
+HA_URL = os.getenv('HA_URL')
 
 # Configuration
 URL = "https://www.stm.info/en/info/service-updates/metro"
@@ -50,10 +48,14 @@ def scrape_metro_status():
 
 def update_home_assistant(lines_status):
     """Updates Home Assistant with the status of each line."""
+    print(f"Using HA_URL: {HA_URL}")
+    print(f"Using HA_TOKEN: {'***' + HA_TOKEN[-4:] if HA_TOKEN else 'None'}")
+    
     headers = {
         "Authorization": f"Bearer {HA_TOKEN}",
         "Content-Type": "application/json",
     }
+    
     for line, data in lines_status.items():
         sensor_id = LINE_SENSORS.get(line)
         print(f"Looking up sensor_id for {line}: {sensor_id}")  # Debugging
@@ -61,14 +63,23 @@ def update_home_assistant(lines_status):
             # Extract only the status text for the sensor state
             status = data["status"]
             print(f"Updating {sensor_id} to {status}")
-            payload = {"state": status}
+            payload = {
+                "state": status,
+                "attributes": {
+                    "friendly_name": f"Metro {data['line_name']} Status",
+                    "icon": "mdi:subway",
+                    "line_name": data["line_name"],
+                    "unique_id": f"stm_metro_{line}_status",
+                    "device_class": "enum"
+                }
+            }
             try:
                 response = requests.post(
                     f"{HA_URL}/api/states/{sensor_id}",
                     headers=headers,
                     json=payload,
                 )
-                if response.status_code == 200:
+                if response.status_code in [200, 201]:
                     print(f"Successfully updated {sensor_id} to {status}")
                 else:
                     print(f"Failed to update {sensor_id}: {response.status_code}, {response.text}")
