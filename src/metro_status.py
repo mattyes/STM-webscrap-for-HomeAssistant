@@ -19,16 +19,16 @@ LINE_SENSORS = {
     "Line 4 - Yellow": "sensor.metro_line_4_status",
 }
 
-def scrape_metro_status2():
+def scrape_metro_status():
     try:
-
+        # Request metro status from STM. The official page uses the timestamp, so I added it here.
         req = requests.get(URL + str(int(time.time())))
         data = json.loads(req.text)['metro']
 
+        # Coax data into friendly format.
         statuses = {}
-
-        for metro in data:
-            statuses[data[metro]['name']] = data[metro]['data']['text']
+        for line in data:
+            statuses[data[line]['name']] = data[line]['data']['text']
 
         return statuses
     except Exception as e:
@@ -61,7 +61,7 @@ def update_home_assistant(lines_status):
                 print(f"Error updating {sensor_id}: {e}")
 
 if __name__ == "__main__":
-    metro_status = scrape_metro_status2()
+    metro_status = scrape_metro_status()
     if metro_status:
         print("Metro Status:")
         for line, data in metro_status.items():
