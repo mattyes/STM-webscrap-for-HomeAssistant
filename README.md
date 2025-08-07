@@ -20,7 +20,7 @@ This project is licensed under MIT licence.
 ### Python
 
 - Install the required Python libraries using `pip`:
-```pip install requests beautifulsoup4 python-dotenv```
+```pip install -r requirements.txt```
 - Python version `3.12.8`
     - Check your Python version:
 ```python --version```
@@ -36,7 +36,7 @@ Clone the Git Repo:
 ```git clone https://github.com/your-username/STM-Metro-Status.git```
 
 Navigate to the folder:
-```cd STM-Metro-Status```
+```cd /STM-Metro-Status```
 
 ### Step 2:
 Create a `.env` file in the project root:
