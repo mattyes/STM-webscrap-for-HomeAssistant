@@ -1,6 +1,6 @@
 # STM Metro Status to Home Assistant
 
-STM Metro Status is a Python project for residents of the Montreal region using [Home Assistant](https://www.home-assistant.io/). This script scrapes the STM website to get the real-time status of Montreal's metro lines and updates Home Assistant sensors with the data.
+STM Metro Status is a [Home Assistant](https://www.home-assistant.io/) integration to grab the current status of the STM's metro lines. This script uses the STM AJAX API to get the real-time status of Montreal's metro lines and updates Home Assistant sensors with the data.
 
 This project is licensed under MIT licence.
 
@@ -10,81 +10,66 @@ This project is licensed under MIT licence.
 
 - Fetches real-time metro status from [STM's website](https://www.stm.info/en/info/service-updates/metro).
 - Updates custom Home Assistant sensors with metro status.
-- Can be scheduled to run locally using Task Scheduler, cron jobs, or similar tools.
 - Extensible to support additional metro services.
 
 ---
 
-## Requirements
+There are two ways to install this integration into HomeAssistant you can either install it through HACS or manually.
+## Installation (HACS)
 
-### Python
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mattyes&repository=STM-webscrap-for-HomeAssistant)
 
-- Install the required Python libraries using `pip`:
-```pip install -r requirements.txt```
-- Python version `3.12.8`
-    - Check your Python version:
-```python --version```
+You can either click this button or add `mattyes/STM-webscrap-for-HomeAssistant` as a repository in HACS
 
-### Home Assistant
-Make sure you have a working Home Assistant server hosted
-- If it is running localy use it's `IP address` for the `HA_URL` in the `.env` file.
-- If it's running on a diffrent network or in the cloud use it's `Domain` for the `HA_URL` in the `.env` file.
+## Manual Installation
 
-## Installation
 ### Step 1:
 Clone the Git Repo:
-```git clone https://github.com/your-username/STM-Metro-Status.git```
-
-Navigate to the folder:
-```cd /STM-Metro-Status```
+```git clone https://github.com/mattyes/STM-webscrap-for-HomeAssistant.git```
 
 ### Step 2:
-Create a `.env` file in the project root:
+Copy the repository folder folder into your Home Assistant's `custom_components` directory
 
-```
-HA_TOKEN=your_long_lived_access_token_here 
-HA_URL=your_home_assistant_url_here
-```
 ### Step 3:
-Create the Home Assistant Helpers:
-You need to create **four helpers** in Home Assistant corresponding to the metro lines. These helpers are sensors that will be updated with the metro status:
-- sensor.metro_line_1_status
-- sensor.metro_line_2_status
-- sensor.metro_line_5_status
-- sensor.metro_line_4_status
+**Restart Home Assistant**
 
-For more information on creating sensors in Home Assistant, refer to the official documentation.
+---
 
-### Step 4:
-Run the `metro_status.py` script to ensure it's working:
-```python metro_status.py```
+## Setup
 
-### Step 5:
-Setup the script to run every 5 minutes:
+1. Go to **Settings > Devices & Services**.
+2. Click **Add Integration** in the bottom-right corner.
+3. Search for **STM Metro Status**.
+4. Click it and confirm setup.
 
-- **Windows**: Use Task Scheduler.
+---
 
-- **Linux/Macos**: Use a cron job:
-`*/5 * * * * /path/to/python /path/to/metro_status.py`
+## Sensors Created
 
-## Usage
-### Check the Metro Stage Manually
-Run the script to scrape metro status:
-`python metro_status.py`
-### Update a Specific Sensor for Testing
-Use `test.py` to manually test updating a Home Assistant sensor:
-`python test.py`
+The integration automatically creates the following sensors:
+
+- `sensor.stm_line_1_green`
+- `sensor.stm_line_2_orange`
+- `sensor.stm_line_5_blue`
+- `sensor.stm_line_4_yellow`
+
+Each sensor shows the current status (e.g., "Normal service", "Delays", etc.).
+
+---
 
 ## Contributing
 Contributions are welcome! Here's how you can help:
 - Add support for more metro services or transit systems.
-- Help integrate this project as an add-on for Home Assistant to allow easier hosting.
 
 To contribute, fork the repository, make your changes, and submit a pull request.
 
 ## Roadmap
-- Add the ability to host the script locally on Home Assistant as an add-on.
 - Allow dynamic configuration for additional metro services through a YAML file or the Home Assistant UI.
+
+## Credits
+- mattyes - Original script
+- jerji - Optimization and addon
+- STM - Data (https://www.stm.info/en/ajax/etats-du-service)
 
 ## Licence
 This project is licensed under the MIT licence.
