@@ -17,7 +17,7 @@ This project is licensed under MIT licence.
 There are two ways to install this integration into HomeAssistant you can either install it through HACS or manually.
 ## Installation (HACS)
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mattyes&repository=STM-webscrap-for-HomeAssistant)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mattyes&repository=STM-webscrap-for-HomeAssistant&category=integration)
 
 You can either click this button or add `mattyes/STM-webscrap-for-HomeAssistant` as a repository in HACS
 
