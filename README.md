@@ -17,7 +17,7 @@ This project is licensed under MIT licence.
 
 ## Prerequisites
 
-You need an **STM API key** to use this integration. Get one from the [STM Developer Portal](https://portal.stm.info/).
+You need an **STM API key** to use this integration. Get one from the [STM Developer Portal](https://www.stm.info/a-propos/documents-donnees/donnees-ouvertes).
 
 ---
 
