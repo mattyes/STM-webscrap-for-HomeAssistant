@@ -2,7 +2,28 @@
   "config": {
     "step": {
       "user": {
-        "description": "{message}"
+        "title": "STM Metro Status",
+        "description": "{message}",
+        "data": {
+          "api_key": "API Key"
+        }
+      }
+    },
+    "error": {
+      "required": "API Key is required"
+    },
+    "abort": {
+      "already_configured": "This integration is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "STM Metro Status Options",
+        "description": "{key_hint}",
+        "data": {
+          "api_key": "API Key"
+        }
       }
     }
   }
