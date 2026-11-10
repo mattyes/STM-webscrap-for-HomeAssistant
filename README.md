@@ -120,7 +120,7 @@ action:
 
 ## Update from v1.x
 
-Version 2.0.0 moves from the old STM website scraping to the official STM API. You will need to reconfigure the integration with an API key from the [STM Developer Portal](https://portal.stm.info/). Remove the old integration and re-add it with your API key.
+Version 2.0.0 moves from the old STM website scraping to the official STM API. You will need to reconfigure the integration with an API key from the [STM Developer Portal](https://api.stm.info/pub/od/i3/v2/messages/etatservice). Remove the old integration and re-add it with your API key.
 
 ---
 
@@ -132,7 +132,7 @@ Contributions are welcome! Fork the repo, make your changes, and submit a PR.
 
 - [mattyes](https://github.com/mattyes) – Original script
 - [jerji](https://github.com/jerji) – Optimization and addon
-- STM – Data (via their [API portal](https://portal.stm.info/))
+- STM – Data (via their [API portal](https://api.stm.info/pub/od/i3/v2/messages/etatservice))
 
 ## Licence
 
